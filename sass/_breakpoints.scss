@@ -1,0 +1,19 @@
+// =============================================================
+// Breakpoint tokens and a media-query helper (mobile first)
+// Written in em so breakpoints respond to the user's font size.
+// =============================================================
+
+@use "sass:map";
+
+$breakpoints: (
+  "tablet": 40em,  // 640px
+  "laptop": 64em,  // 1024px
+  "desktop": 80em, // 1280px
+);
+
+// Usage: @include bp.up("tablet") { ... }
+@mixin up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

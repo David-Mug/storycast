@@ -1,0 +1,13 @@
+// =============================================================
+// StoryCast main stylesheet (entry point)
+// Compile with:  npx sass@1.83.4 sass/main.scss css/main.css --no-source-map
+//
+// Token partials (_colors, _typography, _spacing, _breakpoints) output no
+// CSS. Each style partial loads the tokens it needs with @use, and this
+// file loads the style partials in cascade order.
+// =============================================================
+
+@use "base";
+@use "layout";
+@use "components";
+@use "about";

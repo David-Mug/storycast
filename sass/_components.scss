@@ -1,0 +1,402 @@
+// =============================================================
+// Components: reusable pieces shared across pages
+// =============================================================
+
+@use "colors" as c;
+@use "typography" as t;
+@use "spacing" as s;
+@use "breakpoints" as bp;
+
+// ---------- Buttons ----------
+// Real links styled as buttons (they navigate, so they stay <a>).
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: s.$space-2;
+  min-height: s.$tap-target;
+  padding: s.$space-3 s.$space-5;
+  border: 2px solid transparent;
+  border-radius: s.$radius-pill;
+  font-family: t.$font-body;
+  font-weight: t.$weight-bold;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color s.$transition-fast, color s.$transition-fast;
+
+  &--primary {
+    background-color: c.$color-terracotta;
+    color: c.$color-white;
+
+    &:hover {
+      background-color: c.$color-terracotta-dark;
+      color: c.$color-white;
+      text-decoration: underline;
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    border-color: c.$color-charcoal;
+    color: c.$color-charcoal;
+
+    &:hover {
+      background-color: c.$color-charcoal;
+      color: c.$color-cream;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Light button for use on terracotta or dark backgrounds.
+.button--light {
+  background-color: c.$color-cream;
+  color: c.$color-charcoal;
+
+  &:hover {
+    background-color: c.$color-white;
+    color: c.$color-charcoal;
+    text-decoration: underline;
+  }
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: s.$space-3;
+}
+
+// ---------- Eyebrow label above headings ----------
+
+.eyebrow {
+  margin-bottom: s.$space-3;
+  color: c.$color-terracotta-dark;
+  font-size: t.$text-sm;
+  font-weight: t.$weight-bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lead {
+  font-size: t.$text-lead;
+  color: c.$color-text-muted;
+}
+
+// ---------- Badges (media type, captions, status) ----------
+// Always contain text, so meaning never depends on color alone.
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: s.$space-2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: s.$space-1;
+  padding: s.$space-1 s.$space-3;
+  border: s.$border-width solid c.$color-border-strong;
+  border-radius: s.$radius-pill;
+  background-color: c.$color-surface;
+  color: c.$color-text;
+  margin: 0;
+  font-size: t.$text-sm;
+  font-weight: t.$weight-medium;
+  line-height: 1.4;
+
+  &--status {
+    border-style: dashed;
+    color: c.$color-text-muted;
+  }
+}
+
+// ---------- Story card (uses a container query) ----------
+// The grid cell (.story-grid__item) is the query container. The card
+// stacks image above text by default; when its own container is at
+// least 34rem wide it switches to image beside text. The same card
+// therefore adapts whether it sits in a wide featured slot, a
+// three-column grid or a narrow sidebar, whatever the viewport width.
+// Browsers without container query support keep the stacked layout.
+
+.story-grid__item {
+  container-type: inline-size;
+  container-name: story-card;
+}
+
+.story-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: c.$color-surface;
+  border: s.$border-width solid c.$color-border;
+  border-radius: s.$radius-lg;
+  box-shadow: s.$shadow-card;
+
+  &__media {
+    margin: 0;
+    aspect-ratio: 3 / 2;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: s.$space-3;
+    padding: s.$space-5;
+  }
+
+  &__category {
+    margin: 0;
+    color: c.$color-terracotta-dark;
+    font-size: t.$text-sm;
+    font-weight: t.$weight-bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: t.$text-h3;
+  }
+
+  &__description {
+    margin: 0;
+    color: c.$color-text-muted;
+  }
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: s.$space-3;
+    margin-top: auto;
+    padding-top: s.$space-2;
+  }
+
+  // The "Watch Story" link stretches over the whole card (::after), so
+  // the full card is clickable while only one link is announced to
+  // screen readers. Its look comes from the .button classes.
+  &__link {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::after {
+        outline: s.$focus-width solid c.$color-focus;
+        outline-offset: -#{s.$focus-width + 2px};
+        border-radius: s.$radius-lg;
+      }
+    }
+  }
+
+  &--linked {
+    position: relative;
+  }
+}
+
+@container story-card (min-width: 34rem) {
+  .story-card {
+    flex-direction: row;
+
+    &__media {
+      flex: 0 0 45%;
+      aspect-ratio: auto;
+      min-height: 100%;
+    }
+
+    &__body {
+      justify-content: center;
+      padding: s.$space-6;
+    }
+
+    &__title {
+      font-size: t.$text-h2;
+    }
+  }
+}
+
+// ---------- Media player ----------
+
+.media-player {
+  margin: 0;
+
+  video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: c.$color-charcoal;
+    border-radius: s.$radius-md;
+  }
+
+  figcaption {
+    margin-top: s.$space-3;
+    color: c.$color-text-muted;
+    font-size: t.$text-sm;
+  }
+}
+
+// ---------- Transcript ----------
+// Timestamped lines: time on the left, text on the right (Grid).
+
+.transcript {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &__line {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: s.$space-3;
+    max-width: t.$measure;
+    padding-block: s.$space-2;
+    border-bottom: s.$border-width solid c.$color-border;
+  }
+
+  // Timestamps are buttons that move the video to that point.
+  &__time {
+    align-self: start;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: c.$color-terracotta-dark;
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+    font-weight: t.$weight-bold;
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+
+    &:hover {
+      color: c.$color-link-hover;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  &__intro {
+    color: c.$color-text-muted;
+  }
+
+  &__chapter {
+    margin: s.$space-6 0 s.$space-2;
+    font-size: 1.125rem;
+  }
+
+  &__missing {
+    padding: s.$space-4 s.$space-5;
+    border: s.$border-width dashed c.$color-border-strong;
+    border-radius: s.$radius-md;
+    background-color: c.$color-surface;
+  }
+}
+
+// ---------- Results status (e.g. "Page 2 of 3") ----------
+// Receives focus after a page change (tabindex="-1" in the HTML).
+
+.results-status {
+  margin: 0;
+  color: c.$color-text-muted;
+  font-weight: t.$weight-medium;
+}
+
+// ---------- Pagination ----------
+// Flexbox lines up Previous, the page numbers and Next, and wraps
+// them onto a second line on very narrow screens.
+
+.pagination {
+  margin-top: s.$space-7;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: s.$space-1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include bp.up("tablet") {
+      gap: s.$space-2;
+    }
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: s.$space-2;
+    min-width: s.$tap-target;
+    min-height: s.$tap-target;
+    padding: 0 s.$space-3;
+    border: 2px solid c.$color-charcoal;
+    border-radius: s.$radius-pill;
+    background-color: c.$color-surface;
+    color: c.$color-text;
+    font-family: t.$font-body;
+    font-size: 1rem;
+    font-weight: t.$weight-bold;
+    cursor: pointer;
+    transition: background-color s.$transition-fast, color s.$transition-fast;
+
+    @include bp.up("tablet") {
+      padding-inline: s.$space-4;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: c.$color-bg;
+      text-decoration: underline;
+    }
+
+    // Current page: filled background AND aria-current, so the state is
+    // shown visually (not by color alone) and announced by screen readers.
+    &[aria-current="page"] {
+      background-color: c.$color-charcoal;
+      color: c.$color-cream;
+
+      &:hover {
+        background-color: c.$color-charcoal;
+      }
+    }
+
+    // Disabled Previous/Next: dashed border and muted text. Native
+    // `disabled` also tells assistive technology the button is unavailable.
+    &:disabled {
+      border-style: dashed;
+      border-color: c.$color-border-strong;
+      background-color: transparent;
+      color: c.$color-text-muted;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ---------- Notice (prototype / sample labels) ----------
+
+.notice {
+  padding: s.$space-4 s.$space-5;
+  border-left: 4px solid c.$color-terracotta;
+  background-color: c.$color-surface;
+  border-radius: 0 s.$radius-md s.$radius-md 0;
+
+  p {
+    margin: 0;
+  }
+}

@@ -1,0 +1,32 @@
+// =============================================================
+// Color tokens
+// Contrast ratios are measured against $color-cream unless noted.
+// =============================================================
+
+// Neutrals
+$color-cream: #faf7f2;      // page background
+$color-sand: #f1eae0;       // alternate section background
+$color-white: #ffffff;      // card surface
+$color-charcoal: #252525;   // main text, 14.34:1
+$color-gray: #555555;       // secondary text, 6.98:1
+
+// Brand
+$color-terracotta: #a95738;      // button background (white text 5.11:1)
+$color-terracotta-dark: #8a4329; // links and accent text, 6.74:1
+$color-peach: #e8b49f;           // links and focus on dark backgrounds (8.37:1 on charcoal)
+
+// Borders
+$color-border: #d9cfc3;        // decorative dividers only
+$color-border-strong: #8c7f72; // edges of interactive parts, 3.64:1
+
+// Semantic aliases: components use these, not the raw values above.
+$color-bg: $color-cream;
+$color-bg-alt: $color-sand;
+$color-surface: $color-white;
+$color-text: $color-charcoal;
+$color-text-muted: $color-gray;
+$color-link: $color-terracotta-dark;
+$color-link-hover: $color-charcoal;
+$color-accent: $color-terracotta;
+$color-focus: $color-charcoal;
+$color-focus-on-dark: $color-peach;

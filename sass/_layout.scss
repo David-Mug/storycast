@@ -1,0 +1,258 @@
+// =============================================================
+// Layout: page container, site header, primary navigation, footer
+// Flexbox aligns the header and nav; Grid arranges the footer.
+// =============================================================
+
+@use "colors" as c;
+@use "typography" as t;
+@use "spacing" as s;
+@use "breakpoints" as bp;
+
+// Centers content and keeps a fluid gutter on small screens.
+.container {
+  width: min(100% - 2 * s.$space-gutter, s.$container-max);
+  margin-inline: auto;
+}
+
+// ---------- Site header ----------
+
+.site-header {
+  background-color: c.$color-bg;
+  border-bottom: s.$border-width solid c.$color-border;
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: s.$space-3 s.$space-6;
+    padding-block: s.$space-4;
+  }
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: s.$space-3;
+  color: c.$color-text;
+  text-decoration: none;
+
+  // Decorative: the link's name comes from the text beside it.
+  &__logo {
+    flex: none;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    font-family: t.$font-heading;
+    font-size: 1.5rem;
+    font-weight: t.$weight-extrabold;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  &__accent {
+    color: c.$color-terracotta-dark;
+  }
+
+  &__tagline {
+    font-size: t.$text-sm;
+    color: c.$color-text-muted;
+  }
+
+  &:hover {
+    color: c.$color-text;
+  }
+}
+
+// ---------- Primary navigation ----------
+
+.site-nav {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: s.$space-1 s.$space-2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: s.$tap-target;
+    padding-inline: s.$space-3;
+    color: c.$color-text;
+    font-weight: t.$weight-medium;
+    text-decoration: none;
+    border-radius: s.$radius-sm;
+
+    &:hover {
+      color: c.$color-link;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+
+    // The current page is shown with a bold underline, not color alone.
+    &[aria-current="page"] {
+      font-weight: t.$weight-bold;
+      text-decoration: underline;
+      text-decoration-color: c.$color-accent;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 0.45em;
+    }
+  }
+}
+
+// ---------- Main content ----------
+
+.site-main {
+  display: block;
+}
+
+.section {
+  padding-block: s.$space-section;
+
+  &--alt {
+    background-color: c.$color-bg-alt;
+  }
+
+  // Centered call to action below a section's content.
+  &__action {
+    display: flex;
+    justify-content: center;
+    max-width: none;
+    margin: s.$space-7 0 0;
+  }
+}
+
+// ---------- Shared story page (story/my-story.html) ----------
+// A single column of sections with even spacing between them.
+
+.story-page {
+  display: flex;
+  flex-direction: column;
+  gap: s.$space-7;
+  padding-block: s.$space-section;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: s.$space-3;
+
+    > * {
+      margin: 0;
+    }
+  }
+
+  section > h2 {
+    margin-bottom: s.$space-4;
+  }
+}
+
+// ---------- Story grid ----------
+// Used for the featured stories (home) and the full list (stories page).
+// 1 column on mobile, 2 on tablet, 3 on laptop and up. minmax(0, 1fr)
+// lets columns shrink below their content width, preventing overflow.
+// Grid items stretch to the tallest card in each row, so cards line up.
+
+.story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: s.$space-gutter;
+  margin: s.$space-6 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include bp.up("tablet") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include bp.up("laptop") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  > li {
+    max-width: none;
+  }
+}
+
+// ---------- Site footer ----------
+
+.site-footer {
+  padding-block: s.$space-8 s.$space-6;
+  background-color: c.$color-charcoal;
+  color: c.$color-cream;
+
+  a {
+    color: c.$color-peach;
+
+    &:hover {
+      color: c.$color-white;
+    }
+
+    &:focus-visible {
+      outline-color: c.$color-focus-on-dark;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: s.$space-6;
+
+    @include bp.up("tablet") {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include bp.up("laptop") {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: s.$space-3;
+    font-family: t.$font-heading;
+    font-size: 1.5rem;
+    font-weight: t.$weight-extrabold;
+    margin-bottom: s.$space-2;
+  }
+
+  // Light version of the logo for the charcoal footer (decorative).
+  &__logo {
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  &__heading {
+    font-size: 1rem;
+    font-weight: t.$weight-bold;
+    margin-bottom: s.$space-3;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li + li {
+      margin-top: s.$space-2;
+    }
+  }
+
+  &__note {
+    max-width: none;
+    margin-top: s.$space-7;
+    padding-top: s.$space-5;
+    border-top: s.$border-width solid rgb(250 247 242 / 25%);
+    font-size: t.$text-sm;
+  }
+}

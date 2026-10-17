@@ -1,0 +1,10 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Sass cache and source maps (css/main.css itself IS committed)
+.sass-cache/
+*.css.map
+
+# Dependencies (none are required, but keep them out if installed locally)
+node_modules/

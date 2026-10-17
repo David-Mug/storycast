@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Story | StoryCast</title>
+  <meta name="description" content="Watch a StoryCast video story, with an audio version, transcript information, credits and related stories.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Manrope:wght@700;800&amp;display=swap">
+  <link rel="icon" href="../assets/images/storycast-favicon.png" type="image/png">
+  <link rel="stylesheet" href="../css/main.css">
+  <script src="../js/stories-data.js" defer></script>
+  <script src="../js/transcripts-data.js" defer></script>
+  <script src="../js/story-page.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html">
+        <img class="brand__logo" src="../assets/images/storycast-logo.png" width="48" height="48" alt="">
+        <span class="brand__text">
+          <span class="brand__name">Story<span class="brand__accent">Cast</span></span>
+          <span class="brand__tagline">Every voice has a story.</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="../index.html">Home</a></li>
+          <li><a class="site-nav__link" href="../stories.html">Stories</a></li>
+          <li><a class="site-nav__link" href="../about.html">More About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main">
+    <!-- One template for every video. js/story-page.js reads ?id=... and
+         fills in the content; the elements below stay hidden until then. -->
+    <!-- Breadcrumb hidden for now:
+    <nav aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../stories.html">Stories</a></li>
+        <li><a href="my-story.html" aria-current="page">Story</a></li>
+      </ol>
+    </nav>
+    -->
+
+    <article class="container story-page" id="story" hidden>
+      <header class="story-page__header">
+        <p class="eyebrow" id="story-category"></p>
+        <h1 id="story-title">Story</h1>
+        <p class="lead" id="story-description"></p>
+        <ul class="badge-list" id="story-badges"></ul>
+      </header>
+
+      <figure class="media-player">
+        <video id="story-video" controls preload="metadata" playsinline width="1280" height="720"></video>
+        <figcaption id="story-video-caption"></figcaption>
+      </figure>
+
+      <section id="audio" aria-labelledby="audio-title">
+        <h2 id="audio-title">Audio version</h2>
+        <audio id="story-audio" controls preload="metadata"></audio>
+        <p><a id="audio-download" href="#audio">Download the audio (MP3)</a></p>
+      </section>
+
+      <section id="transcript" aria-labelledby="transcript-title">
+        <h2 id="transcript-title">Transcript</h2>
+        <div id="story-transcript"></div>
+      </section>
+
+      <section id="credits" aria-labelledby="credits-title">
+        <h2 id="credits-title">Source and credits</h2>
+        <p id="story-source"></p>
+        <p><a href="../about.html#accessibility">How we make stories accessible</a></p>
+      </section>
+
+      <section id="related" aria-labelledby="related-title">
+        <h2 id="related-title">Related stories</h2>
+        <ul class="story-grid" id="related-list"></ul>
+        <p class="section__action">
+          <a class="button button--secondary" href="../stories.html">Back to all stories</a>
+        </p>
+      </section>
+    </article>
+
+    <section class="container story-page" id="story-error" aria-labelledby="story-error-title" hidden>
+      <h1 id="story-error-title">Story not found</h1>
+      <p class="lead" id="story-error-message"></p>
+      <p><a class="button button--primary" href="../stories.html">Browse all stories</a></p>
+    </section>
+
+    <noscript>
+      <section class="container story-page">
+        <h1>Story</h1>
+        <p class="lead">This page needs JavaScript to load the story you selected.</p>
+        <p><a class="button button--primary" href="../stories.html">Browse all stories</a></p>
+      </section>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <p class="site-footer__brand"><img class="site-footer__logo" src="../assets/images/storycast-logo-on-dark.png" width="40" height="40" alt="">StoryCast</p>
+          <p>Every voice has a story. Short audio and video stories with captions and full transcripts.</p>
+        </div>
+        <nav aria-labelledby="footer-explore">
+          <h2 class="site-footer__heading" id="footer-explore">Explore</h2>
+          <ul class="site-footer__list">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../stories.html">All Stories</a></li>
+            <li><a href="../about.html">About StoryCast</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="site-footer__note">Copyright &copy; 2026 StoryCast. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

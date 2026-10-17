@@ -1,0 +1,251 @@
+// =============================================================
+// About page layouts (about.html)
+// Page-specific pieces kept in their own partial so the shared
+// layout and component partials stay focused.
+// =============================================================
+
+@use "colors" as c;
+@use "typography" as t;
+@use "spacing" as s;
+@use "breakpoints" as bp;
+
+// ---------- Hero: text beside a documentary photo ----------
+
+.about-hero {
+  padding-block: s.$space-section;
+
+  &__inner {
+    display: grid;
+    gap: s.$space-7;
+    align-items: center;
+
+    @include bp.up("laptop") {
+      grid-template-columns: 1.1fr 1fr;
+      gap: s.$space-8;
+    }
+  }
+
+  &__text h1 {
+    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.25rem);
+    max-width: 14ch;
+  }
+
+  &__media {
+    position: relative;
+    margin: 0;
+
+    img {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: s.$radius-lg;
+    }
+
+    // Offset terracotta outline behind the photo (decorative).
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      aspect-ratio: 4 / 3;
+      border: 2px solid c.$color-terracotta;
+      border-radius: s.$radius-lg;
+      transform: translate(s.$space-4, s.$space-4);
+    }
+
+    figcaption {
+      margin-top: s.$space-6;
+      color: c.$color-text-muted;
+      font-size: t.$text-sm;
+    }
+  }
+}
+
+// ---------- Split section: heading left, text right ----------
+
+.about-split {
+  &__inner {
+    display: grid;
+    gap: s.$space-4;
+
+    @include bp.up("laptop") {
+      grid-template-columns: 1fr 2fr;
+      gap: s.$space-8;
+    }
+  }
+
+  // Short terracotta rule above the heading.
+  &__heading::before {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 4px;
+    margin-bottom: s.$space-4;
+    background-color: c.$color-terracotta;
+  }
+
+  &__intro {
+    font-size: t.$text-lead;
+    line-height: t.$leading-body;
+  }
+}
+
+// ---------- Statement (mission) ----------
+
+.statement {
+  padding-left: s.$space-6;
+  border-left: 4px solid c.$color-terracotta;
+
+  &__label {
+    margin-bottom: s.$space-4;
+    color: c.$color-terracotta-dark;
+    font-family: t.$font-body;
+    font-size: t.$text-sm;
+    font-weight: t.$weight-bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__text {
+    max-width: 32ch;
+    margin: 0;
+    font-family: t.$font-heading;
+    font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.375rem);
+    font-weight: t.$weight-bold;
+    line-height: t.$leading-snug;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ---------- Beliefs: three items with icons ----------
+
+.beliefs {
+  display: grid;
+  gap: s.$space-6;
+  margin: s.$space-6 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include bp.up("tablet") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include bp.up("laptop") {
+    gap: s.$space-7;
+  }
+}
+
+.belief {
+  display: flex;
+  flex-direction: column;
+  gap: s.$space-3;
+  padding-top: s.$space-5;
+  border-top: 2px solid c.$color-charcoal;
+
+  &__icon {
+    box-sizing: content-box;
+    padding: s.$space-3;
+    border-radius: s.$radius-pill;
+    background-color: c.$color-sand;
+    color: c.$color-terracotta-dark;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    color: c.$color-text-muted;
+  }
+}
+
+// ---------- Accessibility features ----------
+
+.feature-list {
+  display: grid;
+  gap: s.$space-5 s.$space-6;
+  margin: s.$space-6 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include bp.up("tablet") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include bp.up("laptop") {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  li {
+    padding-top: s.$space-4;
+    border-top: s.$border-width solid c.$color-border-strong;
+  }
+
+  h3 {
+    margin-bottom: s.$space-2;
+    font-size: 1.125rem;
+  }
+
+  p {
+    margin: 0;
+    color: c.$color-text-muted;
+    font-size: 0.9375rem;
+  }
+}
+
+.about-subheading {
+  margin-top: s.$space-7;
+}
+
+.about-list {
+  padding-left: s.$space-5;
+
+  li + li {
+    margin-top: s.$space-2;
+  }
+}
+
+.about-columns {
+  display: grid;
+  gap: s.$space-6;
+
+  @include bp.up("tablet") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: s.$space-8;
+  }
+
+  .about-subheading {
+    margin-top: 0;
+  }
+}
+
+// ---------- Closing call to action ----------
+
+.cta-band {
+  padding-block: s.$space-section;
+  background-color: c.$color-terracotta;
+  color: c.$color-white; // 5.11:1 on terracotta
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: s.$space-4;
+    text-align: center;
+  }
+
+  &__title {
+    max-width: 24ch;
+    margin: 0;
+  }
+
+  &__text {
+    margin: 0 0 s.$space-3;
+  }
+
+  // Charcoal focus would be under 3:1 on terracotta, so use cream here.
+  :focus-visible {
+    outline-color: c.$color-cream;
+  }
+}
